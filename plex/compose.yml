@@ -1,0 +1,27 @@
+name: plex
+services:
+    pms-docker:
+        container_name: plex
+        privileged: true
+        restart: always
+        devices:
+            - /dev/dri:/dev/dri
+        ports:
+            - 32400:32400/tcp
+            - 8324:8324/tcp
+            - 32469:32469/tcp
+            - 1900:1900/udp
+            - 32410:32410/udp
+            - 32412:32412/udp
+            - 32413:32413/udp
+            - 32414:32414/udp
+        environment:
+            - TZ=America/Los_Angeles
+            - PLEX_CLAIM=[PASTE YOUR PLEX CLAIM HERE]
+            - ADVERTISE_IP=http://192.168.1.23:32400/
+        hostname: plex
+        volumes:
+            - /mnt/e/plex/database:/config
+            - /mnt/e/plex/transcode:/transcode
+            - /mnt/e/Media:/data # /data is the folder that contains your media files in Plex UI
+        image: plexinc/pms-docker
